@@ -12,6 +12,7 @@ blddir = 'build'
 
 
 def options(opt):
+    opt.add_option('--resibots', type='string', help='path to resibots', dest='resibots')
     opt.load('compiler_cxx')
     opt.load('eigen')
 
@@ -46,4 +47,4 @@ def build(bld):
                 uselib='EIGEN',
                 target='omni_kinematics_test')
 
-    bld.install_files('${PREFIX}/include/omni_kinematics', bld.path.ant_glob('include/omni_kinematics/*.hpp'), relative_trick=True)
+    bld.install_files('${PREFIX}', bld.path.ant_glob('include/omni_kinematics/*.hpp'), relative_trick=True)

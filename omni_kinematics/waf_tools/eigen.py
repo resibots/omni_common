@@ -7,6 +7,7 @@
 Quick n dirty eigen detection
 """
 
+import os
 from waflib.Configure import conf
 
 
@@ -15,11 +16,13 @@ def options(opt):
 
 
 @conf
-def check_omni_vrep(conf, **kw):
+def check_eigen(conf, **kw):
+    required = 'required' in kw and kw.get('required', False)
     includes_check = ['/usr/include/eigen3', '/usr/local/include/eigen3', '/usr/include', '/usr/local/include']
+    resibots_dir = conf.options.resibots if hasattr(conf.options, 'resibots') and conf.options.resibots else None
 
-    if conf.options.resibots:
-        includes_check = [conf.options.resibots + '/include'] + includes_check
+    if resibots_dir:
+        includes_check = [resibots_dir + '/include'] + includes_check
 
     if conf.options.eigen:
         includes_check = [conf.options.eigen + '/include'] + includes_check
@@ -31,17 +34,18 @@ def check_omni_vrep(conf, **kw):
         res = False
 
     if res:
-        conf.env.INCLUDES_EIGEN = includes_check
+        conf.env.INCLUDES_EIGEN = [os.path.expanduser(include) for include in includes_check]
+        conf.env.DEFINES_EIGEN = ['USE_EIGEN']
         conf.end_msg('ok')
     else:
-        if conf.options.eigen and conf.options.resibots:
-            msg = 'not found in %s nor in %s' % (conf.options.eigen, conf.options.resibots)
-        elif conf.options.eigen or conf.options.resibots:
-            msg = 'not found in %s' % (conf.options.eigen if conf.options.eigen else conf.options.resibots)
+        if conf.options.eigen and resibots_dir:
+            msg = 'not found in %s nor in %s' % (conf.options.eigen, resibots_dir)
+        elif conf.options.eigen or resibots_dir:
+            msg = 'not found in %s' % (conf.options.eigen if conf.options.eigen else resibots_dir)
         else:
             msg = 'not found, use --eigen=/path/to/eigen or --resibots=/path/to/resibots'
 
-        if 'required' in kw and kw.get('required', False):
+        if required:
             conf.fatal(msg)
         else:
             conf.end_msg(msg, 'YELLOW')

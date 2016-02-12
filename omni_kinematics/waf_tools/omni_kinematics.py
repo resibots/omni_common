@@ -6,6 +6,7 @@
 Quick n dirty omni_kinematics detection
 """
 
+import os
 from waflib.Configure import conf
 
 
@@ -16,9 +17,10 @@ def options(opt):
 @conf
 def check_omni_kinematics(conf, **kw):
     includes_check = ['/usr/include', '/usr/local/include']
+    resibots_dir = conf.options.resibots if hasattr(conf.options, 'resibots') and conf.options.resibots else None
 
-    if conf.options.resibots:
-        includes_check = [conf.options.resibots + '/include'] + includes_check
+    if resibots_dir:
+        includes_check = [resibots_dir + '/include'] + includes_check
 
     if conf.options.omni_kinematics:
         includes_check = [conf.options.omni_kinematics + '/include'] + includes_check
@@ -30,13 +32,14 @@ def check_omni_kinematics(conf, **kw):
         res = False
 
     if res:
-        conf.env.INCLUDES_OMNI_KINEMATICS = includes_check
+        conf.env.INCLUDES_OMNI_KINEMATICS = [os.path.expanduser(include) for include in includes_check]
+        conf.env.DEFINES_OMNI_KINEMATICS = ['USE_OMNI_KINEMATICS']
         conf.end_msg('ok')
     else:
-        if conf.options.omni_kinematics and conf.options.resibots:
-            msg = 'not found in %s nor in %s' % (conf.options.omni_kinematics, conf.options.resibots)
-        elif conf.options.omni_kinematics or conf.options.resibots:
-            msg = 'not found in %s' % (conf.options.omni_kinematics if conf.options.omni_kinematics else conf.options.resibots)
+        if conf.options.omni_kinematics and resibots_dir:
+            msg = 'not found in %s nor in %s' % (conf.options.omni_kinematics, resibots_dir)
+        elif conf.options.omni_kinematics or resibots_dir:
+            msg = 'not found in %s' % (conf.options.omni_kinematics if conf.options.omni_kinematics else resibots_dir)
         else:
             msg = 'not found, use --omni_kinematics=/path/to/omni_kinematics or --resibots=/path/to/resibots'
 
