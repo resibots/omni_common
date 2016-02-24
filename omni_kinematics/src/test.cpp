@@ -27,9 +27,9 @@ int main(int argc, char** argv)
         joints[3] = atof(argv[4]);
     }
 
-    std::cout << "Omnipointer straight arm position (arm frame): " << omni_kinematics::Omnipointer::arm_forward_model(joints).transpose() << std::endl;    
-    std::cout << "Omnipointer straight arm position (base frame): " << omni_kinematics::Omnipointer::full_forward_model(x, y, theta, joints).transpose() << std::endl;    
-    std::cout << "Omnigrasper random arm position (arm frame): " << omni_kinematics::Omnigrasper::arm_forward_model(joints).transpose() << std::endl;
-    std::cout << "Omnipointer straight arm position (base frame): " << omni_kinematics::Omnipointer::full_forward_model(x, y, theta, joints).transpose() << std::endl;    
+    std::cout << "Omnipointer end effector position (with respect to the arm frame): " << omni_kinematics::Omnipointer::arm_forward_model(joints).transpose() << std::endl;    
+    std::cout << "Omnipointer end effector position (with respect to the base frame before base movement): " << omni_kinematics::Omnipointer::full_forward_model(x, y, theta, joints).transpose() << std::endl;    
+    std::cout << "Omnigrasper end effector position (with respect to the arm frame): " << omni_kinematics::Omnigrasper::arm_forward_model(joints).transpose() << std::endl;
+    std::cout << "Omnipointer end effector position (with respect to the base frame before base movement): " << omni_kinematics::Omnipointer::full_forward_model(x, y, theta, joints).transpose() << std::endl;    
     return 0;
 }

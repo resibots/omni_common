@@ -20,7 +20,7 @@
 ### Compile and install
 
 - cd to `omni_kinematics` folder
-- Configure with `./waf configure --prefix=path_to_install`
+- Configure with `./waf configure --prefix=/path/to/install`
 - Compile with `./waf build`
 - Install with `./waf install`
 
