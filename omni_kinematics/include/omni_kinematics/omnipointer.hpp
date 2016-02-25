@@ -17,7 +17,7 @@ public:
             sin(theta), cos(theta), 0,
             0, 0, 1;
 
-        return (base_rotation * (arm_forward_model(joints) + Eigen::Vector3d(0.127, 0.0, 0.061))) + Eigen::Vector3d(x, y, 0);
+        return (base_rotation * (arm_forward_model(joints) + Eigen::Vector3d(-0.127, 0.0, 0.061))) + Eigen::Vector3d(x, y, 0);
     }
 
     // Returns the position of the end-effector in the reference frame of the arm
