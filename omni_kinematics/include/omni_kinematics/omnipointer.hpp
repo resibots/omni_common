@@ -12,12 +12,17 @@ public:
     static Eigen::Vector3d full_forward_model(double x, double y, double theta, const Eigen::Vector4d& joints)
     {
         // vrep: return arm_forward_model(joints) + Eigen::Vector3d(-0.008, 0.012, 0.0335);
+        Eigen::Matrix3d arm_rotation_from_base;
+        arm_rotation_from_base << cos(M_PI), -sin(M_PI), 0,
+            sin(M_PI), cos(M_PI), 0,
+            0, 0, 1;
+
         Eigen::Matrix3d base_rotation;
         base_rotation << cos(theta), -sin(theta), 0,
             sin(theta), cos(theta), 0,
             0, 0, 1;
 
-        return (base_rotation * (arm_forward_model(joints) + Eigen::Vector3d(-0.127, 0.0, 0.061))) + Eigen::Vector3d(x, y, 0);
+        return (base_rotation * ((arm_rotation_from_base * arm_forward_model(joints)) + Eigen::Vector3d(-0.127, 0.0, 0.061))) + Eigen::Vector3d(x, y, 0);
     }
 
     // Returns the position of the end-effector in the reference frame of the arm
