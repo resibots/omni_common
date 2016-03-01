@@ -28,24 +28,24 @@ public:
     // Returns the position of the end-effector in the reference frame of the arm
     static Eigen::Vector3d arm_forward_model(const Eigen::Vector4d& joints)
     {
-        return (_arm_tr_mat(joints) * Eigen::Vector4d(0, 0, 0, 1)).head(3);
+        return (arm_tr_mat(joints) * Eigen::Vector4d(0, 0, 0, 1)).head(3);
     }
 
-protected:
     // Returns the full transformation matrix for the kinematic chain of the arm
-    static Eigen::Matrix4d _arm_tr_mat(const Eigen::Vector4d& joints)
+    static Eigen::Matrix4d arm_tr_mat(const Eigen::Vector4d& joints)
     {
         Eigen::MatrixXd dh = _dh_mat(joints);
 
         Eigen::Matrix4d mat = Eigen::Matrix4d::Identity(4, 4);
 
-        for (size_t i = 0; i < dh.rows(); i++) {
+        for (int i = 0; i < dh.rows(); i++) {
             mat = mat * _trmat_dh(dh.row(i));
         }
 
         return mat;
     }
 
+protected:
     // Returns a matrix containing the DH parameters (one row per joint)
     static Eigen::MatrixXd _dh_mat(const Eigen::VectorXd& q)
     {
