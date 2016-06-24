@@ -8,7 +8,7 @@
 
 ## Available models
 
-- **omnipointer_kinematics** : Kinematic model for the Omnipointer robot. 
+- **omnipointer_kinematics** : Kinematic model for the Omnipointer robot.
 - **omnigrasper_kinematics** : Kinematic model for the Omnigrasper robot (matches vrep).
 
 ## How to compile
