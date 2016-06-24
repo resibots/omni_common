@@ -1,18 +1,19 @@
 # omni_common
 
-#### This repo contains all the common data/code for our omnidirectional robots.
+This repository contains all the data/code for our omnidirectional robots that is common to simulation and the real robot. Therefore, there is no dependency on ROS.
+
+## Packages
+Go to the package's folder for more information.
+
+### omni_kinematics
+
+Here we keep the code for efficient computation of the forward kinematic models of our omnidirectional robots.
 
 ## Authors
 
 - Author/Maintainer: Federico Allocati
 
-## Packages
-
-### omni_kinematics
-
-Here we keep the code for efficient computation of the kinematic models of our omnidirectional robots.
-
-## LICENSE
+## License
 
 [CeCILL]
 

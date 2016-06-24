@@ -1,15 +1,13 @@
 # omni_kinematics
 
-#### Here we keep the code for efficient computation of the kinematic models of our omnidirectional robots.
+Here we keep the code for efficient computation of the forward kinematic models of our omnidirectional robots. The currently available models are:
+
+- Omnigrasper, for Omnigrasper robot as in simulation (matches vrep)
+- Omnipointer, for the real Omnigrasper robot, without the Versaball end effector
 
 ## Authors
 
 - Author/Maintainer: Federico Allocati
-
-## Available models
-
-- **omnipointer_kinematics** : Kinematic model for the Omnipointer robot.
-- **omnigrasper_kinematics** : Kinematic model for the Omnigrasper robot (matches vrep).
 
 ## How to compile
 
@@ -45,7 +43,7 @@ conf.check_omni_kinematics()
 
 You can specify an additional parameter `required=True` in the `check_omni_kinematics` method, to force the configuration to fail is the library is not found.
 
-## LICENSE
+## License
 
 [CeCILL]
 
